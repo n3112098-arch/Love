@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для тебя ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #0d0d0d;
+            color: #ff4d6d;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #main-card {
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 0 20px #ff4d6d;
+        }
+
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        p { font-size: 1.2em; line-height: 1.5; }
+
+        .compliment {
+            position: absolute;
+            font-size: 14px;
+            white-space: nowrap;
+            color: #ff85a1;
+            opacity: 0;
+            animation: flyIn 4s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes flyIn {
+            0% { transform: scale(0.5) translate(0, 0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: scale(1.2) translate(var(--x), var(--y)); opacity: 0; }
+        }
+
+        .heart {
+            position: absolute;
+            animation: fall linear infinite;
+            color: #ff4d6d;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-card">
+        <h1>С 14 Февраля, Соня! ❤️</h1>
+        <p>Никита подготовил для тебя <br> кое-что особенное...</p>
+    </div>
+
+    <script>
+        const compliments = [
+            "Красивая", "Умная", "Добрая", "Милая", "Неповторимая", 
+            "Очаровательная", "Смешная", "Лучшая", "Заботливая", "Искренняя",
+            "Стильная", "Нежная", "Талантливая", "Сияющая", "Тёплая",
+            "Чудесная", "Любимая", "Сногсшибательная", "Верная", "Душевная",
+            "Единственная", "Классная", "Загадочная", "Прекрасная", "Солнечная",
+            "Мудрая", "Смелая", "Родная", "Ангельская", "Волшебная"
+        ];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '-5vh';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        function showCompliment(text, index) {
+            setTimeout(() => {
+                const el = document.createElement('div');
+                el.classList.add('compliment');
+                el.innerText = text;
+                
+                // Случайное направление разлета
+                const x = (Math.random() - 0.5) * 600 + 'px';
+                const y = (Math.random() - 0.5) * 600 + 'px';
+                el.style.setProperty('--x', x);
+                el.style.setProperty('--y', y);
+                
+                // Случайная позиция появления
+                el.style.left = Math.random() * 80 + 10 + '%';
+                el.style.top = Math.random() * 80 + 10 + '%';
+                
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 4000);
+            }, index * 800); // Появляются каждые 0.8 сек (как раз на 24-25 сек)
+        }
+
+        // Запуск
+        setInterval(createHeart, 300);
+        compliments.forEach((text, i) => showCompliment(text, i));
+    </script>
+</body>
+</html>
